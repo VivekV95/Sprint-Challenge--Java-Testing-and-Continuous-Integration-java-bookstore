@@ -30,7 +30,6 @@ class UserServiceImpl : UserDetailsService, UserService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userrepos.findByUsername(username)
-                ?: throw UsernameNotFoundException("Invalid username or password.")
         return org.springframework.security.core.userdetails.User(user.username!!, user.getPassword()!!, user.authority)
     }
 
