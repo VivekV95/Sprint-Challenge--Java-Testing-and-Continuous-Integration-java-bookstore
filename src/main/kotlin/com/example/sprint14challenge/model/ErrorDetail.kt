@@ -1,10 +1,9 @@
 package com.example.sprint14challenge.model
 
-import com.example.sprint14kotlinconfig.exception.ValidationError
+import com.example.sprint14challenge.exception.ValidationError
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.HashMap
-
 
 // adapted from https://tools.ietf.org/html/rfc7807
 class ErrorDetail {
