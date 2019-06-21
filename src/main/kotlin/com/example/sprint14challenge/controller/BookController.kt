@@ -6,12 +6,14 @@ import com.example.sprint14challenge.service.BookService
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -39,5 +41,14 @@ class BookController {
         val books = bookService.findAll(pageable)
         if (books.isEmpty()) throw ResourceNotFoundException("No books were found")
         return ResponseEntity(books, HttpStatus.OK)
+    }
+
+    @ApiOperation(value = "Return book by bookid", response = Book::class)
+    @GetMapping(value = ["/book/{bookid}"], produces = ["application/json"])
+    fun findById(@PathVariable
+                 @ApiParam(value = "Book Id", required = true, example = "1")
+                 bookid: Long): ResponseEntity<*> {
+        val book = bookService.findById(bookid)
+        return ResponseEntity(book, HttpStatus.OK)
     }
 }

@@ -4,6 +4,7 @@ import com.example.sprint14challenge.model.Book
 import com.example.sprint14challenge.model.ErrorDetail
 import com.example.sprint14challenge.service.BookService
 import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,7 +30,10 @@ class DataController {
     @PreAuthorize("hasAuthority('ROLE_DATA')")
     @PutMapping(value = ["/book/{bookid}"], consumes = ["application/json"],
             produces = ["application/json"])
-    fun updateBook(@PathVariable bookid: Long,
+    fun updateBook(@PathVariable
+                   @ApiParam(value = "Book Id", required = true, example = "1")
+                   bookid: Long,
+                   @ApiParam(value = "Book details to update", required = true)
                    @Valid @RequestBody book: Book): ResponseEntity<*> {
         val book = bookService.updateBook(bookid, book)
         return ResponseEntity(book, HttpStatus.OK)
@@ -43,7 +47,10 @@ class DataController {
     ])
     @PreAuthorize("hasAuthority('ROLE_DATA')")
     @PostMapping(value = ["/book/{bookid}/author/{authorid}"])
-    fun assignBookToAuthor(@PathVariable bookid: Long,
+    fun assignBookToAuthor(@PathVariable
+                           @ApiParam(value = "Book Id", required = true, example = "1")
+                           bookid: Long,
+                           @ApiParam(value = "Author Id", required = true, example = "1")
                            @PathVariable authorid: Long): ResponseEntity<Any> {
         bookService.assignBookToAuthor(bookid, authorid)
         return ResponseEntity(HttpStatus.CREATED)
@@ -57,7 +64,9 @@ class DataController {
     ])
     @PreAuthorize("hasAuthority('ROLE_DATA')")
     @DeleteMapping(value = ["/book/{bookid}"])
-    fun delete(@PathVariable bookid: Long): ResponseEntity<Any> {
+    fun delete(@PathVariable
+               @ApiParam(value = "Book Id", required = true, example = "1")
+               bookid: Long): ResponseEntity<Any> {
         bookService.delete(bookid)
         return ResponseEntity(HttpStatus.OK)
     }

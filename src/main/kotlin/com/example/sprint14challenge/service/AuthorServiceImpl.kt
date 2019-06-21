@@ -1,5 +1,6 @@
 package com.example.sprint14challenge.service
 
+import com.example.sprint14challenge.exception.ResourceNotFoundException
 import com.example.sprint14challenge.model.Author
 import com.example.sprint14challenge.repository.AuthorRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,4 +21,8 @@ class AuthorServiceImpl: AuthorService {
         return list
     }
 
+    override fun findById(authorid: Long): Author {
+        return authorRepo.findById(authorid)
+                .orElseThrow { ResourceNotFoundException("Author with id $authorid not found") }
+    }
 }

@@ -7,6 +7,8 @@ interface BookService {
 
     fun findAll(pageable: Pageable): MutableList<Book>
 
+    fun findById(bookid: Long): Book
+
     fun updateBook(bookid: Long, book: Book): Book
 
     fun assignBookToAuthor(bookid: Long, authorid: Long)

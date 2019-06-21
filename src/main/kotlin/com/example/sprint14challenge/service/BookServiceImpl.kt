@@ -26,6 +26,11 @@ class BookServiceImpl: BookService {
         return list
     }
 
+    override fun findById(bookid: Long): Book {
+        return bookRepo.findById(bookid)
+                .orElseThrow { ResourceNotFoundException("Book with id $bookid not found") }
+    }
+
     @Transactional
     override fun updateBook(bookid: Long, book: Book): Book {
         val newBook = bookRepo.findById(bookid)

@@ -2,16 +2,19 @@ package com.example.sprint14challenge.controller
 
 import com.example.sprint14challenge.exception.ResourceNotFoundException
 import com.example.sprint14challenge.model.Author
+import com.example.sprint14challenge.model.Book
 import com.example.sprint14challenge.service.AuthorService
 import io.swagger.annotations.ApiImplicitParam
 import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -39,5 +42,14 @@ class AuthorController {
         val authors = authorService.findAll(pageable)
         if (authors.isEmpty()) throw ResourceNotFoundException("No authors were found")
         return ResponseEntity(authors, HttpStatus.OK)
+    }
+
+    @ApiOperation(value = "Return Author by authorid", response = Author::class)
+    @GetMapping(value = ["/author/{authorid}"], produces = ["application/json"])
+    fun findById(@PathVariable
+                 @ApiParam(value = "Author Id", required = true, example = "1")
+                 authorid: Long): ResponseEntity<*> {
+        val author = authorService.findById(authorid)
+        return ResponseEntity(author, HttpStatus.OK)
     }
 }
