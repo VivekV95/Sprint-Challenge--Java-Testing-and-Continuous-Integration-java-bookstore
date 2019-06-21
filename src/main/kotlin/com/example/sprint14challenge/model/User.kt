@@ -3,6 +3,7 @@ package com.example.sprint14challenge.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.annotations.ApiModel
+import io.swagger.annotations.ApiModelProperty
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
@@ -10,20 +11,27 @@ import javax.persistence.*
 import java.util.ArrayList
 
 // User is considered the parent entity
-@ApiModel
+@ApiModel(value = "users")
 @Entity
 @Table(name = "users")
 class User : Auditable {
+
+    @ApiModelProperty(name = "userid", value = "Primary key for users",
+            required = true, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var userid: Long = 0
 
+    @ApiModelProperty(name = "username", value = "Unique username of the user",
+            required = true, example = "myuser101")
     @Column(nullable = false, unique = true)
-    var username: String? = null
+    var username: String = ""
 
+    @ApiModelProperty(name = "password", value = "Password of the user",
+            required = true, example = "mypassword")
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private var password: String? = null
+    private var password: String = ""
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
     @JsonIgnoreProperties("user")

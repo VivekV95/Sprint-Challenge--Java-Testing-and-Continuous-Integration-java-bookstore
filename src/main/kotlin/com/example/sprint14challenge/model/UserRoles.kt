@@ -2,21 +2,27 @@ package com.example.sprint14challenge.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.swagger.annotations.ApiModel
+import io.swagger.annotations.ApiModelProperty
 
 import javax.persistence.*
 import java.io.Serializable
 import java.util.Objects
 
-@ApiModel
+@ApiModel(value = "userroles")
 @Entity
 @Table(name = "userroles")
 class UserRoles : Auditable, Serializable {
+
+    @ApiModelProperty(name = "userid", value = "Foreign key for user",
+            required = true, example = "1")
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
     @JsonIgnoreProperties("userRoles")
     var user: User? = null
 
+    @ApiModelProperty(name = "roleid", value = "Foreign key for role",
+            required = true, example = "1")
     @Id
     @ManyToOne
     @JoinColumn(name = "roleid")
