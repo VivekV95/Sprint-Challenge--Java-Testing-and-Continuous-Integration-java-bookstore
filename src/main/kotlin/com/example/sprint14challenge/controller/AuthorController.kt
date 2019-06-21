@@ -1,5 +1,6 @@
 package com.example.sprint14challenge.controller
 
+import com.example.sprint14challenge.exception.ResourceNotFoundException
 import com.example.sprint14challenge.model.Author
 import com.example.sprint14challenge.service.AuthorService
 import io.swagger.annotations.ApiImplicitParam
@@ -13,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-
 
 @RestController
 @RequestMapping("/authors")
@@ -37,6 +37,7 @@ class AuthorController {
     @GetMapping(value = ["/"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         val authors = authorService.findAll(pageable)
+        if (authors.isEmpty()) throw ResourceNotFoundException("No authors were found")
         return ResponseEntity(authors, HttpStatus.OK)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.sprint14challenge.controller
 
+import com.example.sprint14challenge.exception.ResourceNotFoundException
 import com.example.sprint14challenge.model.Book
 import com.example.sprint14challenge.service.BookService
 import io.swagger.annotations.ApiImplicitParam
@@ -36,6 +37,7 @@ class BookController {
     @GetMapping(value = ["/"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         val books = bookService.findAll(pageable)
+        if (books.isEmpty()) throw ResourceNotFoundException("No books were found")
         return ResponseEntity(books, HttpStatus.OK)
     }
 }

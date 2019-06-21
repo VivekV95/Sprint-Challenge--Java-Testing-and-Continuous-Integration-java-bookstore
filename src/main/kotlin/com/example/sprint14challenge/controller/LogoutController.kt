@@ -2,7 +2,6 @@ package com.example.sprint14challenge.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
-import org.springframework.security.oauth2.common.OAuth2AccessToken
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Controller

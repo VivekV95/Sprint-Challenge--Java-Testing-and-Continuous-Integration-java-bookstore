@@ -20,7 +20,6 @@ class DataController {
     @Autowired
     private lateinit var bookService: BookService
 
-
     @ApiOperation(value = "Updates a Book associated with the bookid"
             , response = Book::class)
     @ApiResponses(value = [

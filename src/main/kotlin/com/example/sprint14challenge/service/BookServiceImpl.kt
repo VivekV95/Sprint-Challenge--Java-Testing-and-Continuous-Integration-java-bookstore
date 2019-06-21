@@ -53,10 +53,8 @@ class BookServiceImpl: BookService {
 
     @Transactional
     override fun delete(bookid: Long) {
-        if (bookRepo.findById(bookid).isPresent) {
-            bookRepo.deleteById(bookid)
-        } else {
-            throw ResourceNotFoundException("Book with id $bookid not found")
-        }
+        bookRepo.findById(bookid).
+                orElseThrow {  ResourceNotFoundException("Book with id $bookid not found")  }
+        bookRepo.deleteById(bookid)
     }
 }
