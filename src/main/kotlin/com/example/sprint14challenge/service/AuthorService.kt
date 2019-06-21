@@ -8,4 +8,8 @@ interface AuthorService {
     fun findAll(pageable: Pageable): MutableList<Author>
 
     fun findById(authorid: Long): Author
+
+    fun updateAuthor(authorid: Long, author: Author): Author
+
+    fun delete(authorid: Long)
 }

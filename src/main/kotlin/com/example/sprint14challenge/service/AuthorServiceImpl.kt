@@ -25,4 +25,18 @@ class AuthorServiceImpl: AuthorService {
         return authorRepo.findById(authorid)
                 .orElseThrow { ResourceNotFoundException("Author with id $authorid not found") }
     }
+
+    override fun updateAuthor(authorid: Long, author: Author): Author {
+        val newAuthor = authorRepo.findById(authorid)
+                .orElseThrow { ResourceNotFoundException("Author with id $authorid not found") }
+        newAuthor.fname = author.fname
+        newAuthor.lname = author.lname
+        return authorRepo.save(newAuthor)
+    }
+
+    override fun delete(authorid: Long) {
+        authorRepo.findById(authorid).
+                orElseThrow {  ResourceNotFoundException("Author with id $authorid not found")  }
+        authorRepo.deleteById(authorid)
+    }
 }

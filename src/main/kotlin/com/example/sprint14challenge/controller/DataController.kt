@@ -1,7 +1,9 @@
 package com.example.sprint14challenge.controller
 
+import com.example.sprint14challenge.model.Author
 import com.example.sprint14challenge.model.Book
 import com.example.sprint14challenge.model.ErrorDetail
+import com.example.sprint14challenge.service.AuthorService
 import com.example.sprint14challenge.service.BookService
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -21,6 +23,9 @@ class DataController {
     @Autowired
     private lateinit var bookService: BookService
 
+    @Autowired
+    private lateinit var authorService: AuthorService
+
     @ApiOperation(value = "Updates a Book associated with the bookid"
             , response = Book::class)
     @ApiResponses(value = [
@@ -37,6 +42,24 @@ class DataController {
                    @Valid @RequestBody book: Book): ResponseEntity<*> {
         val book = bookService.updateBook(bookid, book)
         return ResponseEntity(book, HttpStatus.OK)
+    }
+
+    @ApiOperation(value = "Updates an Author associated with the authorid"
+            , response = Author::class)
+    @ApiResponses(value = [
+        ApiResponse(code = 200, message = "Author updated", response = Author::class),
+        ApiResponse(code = 404, message = "Author Not Found", response = ErrorDetail::class)
+    ])
+    @PreAuthorize("hasAuthority('ROLE_DATA')")
+    @PutMapping(value = ["/author/{authorid}"], consumes = ["application/json"],
+            produces = ["application/json"])
+    fun updateAuthor(@PathVariable
+                   @ApiParam(value = "Author Id", required = true, example = "1")
+                   authorid: Long,
+                   @ApiParam(value = "Author details to update", required = true)
+                   @Valid @RequestBody author: Author): ResponseEntity<*> {
+        val author = authorService.updateAuthor(authorid, author)
+        return ResponseEntity(author, HttpStatus.OK)
     }
 
     @ApiOperation(value = "Assigns a book with bookid to author with authorid"
@@ -64,10 +87,26 @@ class DataController {
     ])
     @PreAuthorize("hasAuthority('ROLE_DATA')")
     @DeleteMapping(value = ["/book/{bookid}"])
-    fun delete(@PathVariable
+    fun deleteBook(@PathVariable
                @ApiParam(value = "Book Id", required = true, example = "1")
                bookid: Long): ResponseEntity<Any> {
         bookService.delete(bookid)
         return ResponseEntity(HttpStatus.OK)
     }
+
+    @ApiOperation(value = "Deletes an Author with authorid"
+            , response = Unit::class)
+    @ApiResponses(value = [
+        ApiResponse(code = 200, message = "Book deleted", response = Book::class),
+        ApiResponse(code = 404, message = "Book Not Found", response = ErrorDetail::class)
+    ])
+    @PreAuthorize("hasAuthority('ROLE_DATA')")
+    @DeleteMapping(value = ["/author/{authorid}"])
+    fun deleteAuthor(@PathVariable
+                   @ApiParam(value = "Author Id", required = true, example = "1")
+                   authorid: Long): ResponseEntity<Any> {
+        authorService.delete(authorid)
+        return ResponseEntity(HttpStatus.OK)
+    }
+
 }
