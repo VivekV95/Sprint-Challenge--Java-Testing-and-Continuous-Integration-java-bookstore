@@ -23,14 +23,14 @@ import java.net.URISyntaxException
 class UserController {
 
     @Autowired
-    val userService: UserService? = null
+    private lateinit var userService: UserService
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/users"], produces = ["application/json"])
     fun listAllUsers(request: HttpServletRequest): ResponseEntity<*> {
         logger.trace(request.requestURI + " accessed")
 
-        val myUsers = userService!!.findAll()
+        val myUsers = userService.findAll()
         return ResponseEntity(myUsers, HttpStatus.OK)
     }
 
@@ -40,7 +40,7 @@ class UserController {
     fun getUser(request: HttpServletRequest, @PathVariable userId: Long?): ResponseEntity<*> {
         logger.trace(request.requestURI + " accessed")
 
-        val u = userService!!.findUserById(userId!!)
+        val u = userService.findUserById(userId!!)
         return ResponseEntity(u, HttpStatus.OK)
     }
 
@@ -60,7 +60,7 @@ class UserController {
     fun addNewUser(request: HttpServletRequest, @Valid @RequestBody newuser: User): ResponseEntity<*> {
         logger.trace(request.requestURI + " accessed")
 
-        val newuser = userService!!.save(newuser)
+        val newuser = userService.save(newuser)
 
         // set the location header for the newly created resource
         val responseHeaders = HttpHeaders()
@@ -79,7 +79,7 @@ class UserController {
     fun updateUser(request: HttpServletRequest, @RequestBody updateUser: User, @PathVariable id: Long): ResponseEntity<*> {
         logger.trace(request.requestURI + " accessed")
 
-        userService!!.update(updateUser, id)
+        userService.update(updateUser, id)
         return ResponseEntity<Any>(HttpStatus.OK)
     }
 
@@ -89,7 +89,7 @@ class UserController {
     fun deleteUserById(request: HttpServletRequest, @PathVariable id: Long): ResponseEntity<*> {
         logger.trace(request.requestURI + " accessed")
 
-        userService!!.delete(id)
+        userService.delete(id)
         return ResponseEntity<Any>(HttpStatus.OK)
     }
 

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 class LogoutController {
     @Autowired
-    lateinit var tokenStore: TokenStore
+    private lateinit var tokenStore: TokenStore
 
     @RequestMapping(value = ["/oauth/revoke-token"], method = [RequestMethod.GET])
     @ResponseStatus(HttpStatus.OK)

@@ -21,8 +21,9 @@ import java.net.URISyntaxException
 @RestController
 @RequestMapping("/roles")
 class RolesController {
+
     @Autowired
-    lateinit var roleService: RoleService
+    private lateinit var roleService: RoleService
 
     @GetMapping(value = ["/roles"], produces = ["application/json"])
     fun listRoles(request: HttpServletRequest): ResponseEntity<*> {

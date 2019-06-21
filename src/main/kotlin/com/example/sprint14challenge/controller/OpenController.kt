@@ -28,10 +28,10 @@ import java.util.ArrayList
 class OpenController {
 
     @Autowired
-    lateinit var userService: UserService
+    private lateinit var userService: UserService
 
     @Autowired
-    lateinit var roleService: RoleService
+    private lateinit var roleService: RoleService
 
     @PostMapping(value = ["/createnewuser"], consumes = ["application/json"], produces = ["application/json"])
     @Throws(URISyntaxException::class)
