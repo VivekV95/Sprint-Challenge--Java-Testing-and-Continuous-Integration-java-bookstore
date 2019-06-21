@@ -7,7 +7,6 @@ import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
 import springfox.documentation.service.ApiInfo
-import springfox.documentation.service.Contact
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 
@@ -27,9 +26,8 @@ import springfox.documentation.spring.web.plugins.Docket
     }
 
     private fun apiEndPointsInfo(): ApiInfo {
-        return ApiInfoBuilder().title("Java String Back End Starting Project")
-                .description("A starting application for developing Java Spring Back End Projects")
-                .contact(Contact("John Mitchell", "http://www.lambdaschool.com", "john@lambdaschool.com"))
+        return ApiInfoBuilder().title("Vivek Vishwanath's Sprint 14 Java Back-End Challenge")
+                .description("A bookstore application")
                 .license("MIT").licenseUrl("https://github.com/LambdaSchool/java-starthere/blob/master/LICENSE")
                 .version("1.0.0").build()
     }
